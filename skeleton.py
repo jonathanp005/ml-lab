@@ -105,8 +105,6 @@ def pla(
             best_w = w.copy()
 
         if plot_every and iteration % plot_every == 0:
-            # Clear so each frame shows only one separator.
-            ax.clear()
             w_for_plot = best_w if use_pocket else w
             _fig, _ax, artists_ = visualise(
                 w_for_plot,
@@ -129,7 +127,7 @@ def pla(
 
     w_out = best_w if use_pocket else w
     if plot_every:
-        ani = animation.ArtistAnimation(fig=fig, artists=artists, interval=500, blit=True)
+        ani = animation.ArtistAnimation(fig=fig, artists=artists, interval=500, blit=False)
         return w_out, (ani, fig), history
     return w_out, None, history
 
