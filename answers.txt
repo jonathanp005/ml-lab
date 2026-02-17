@@ -1,0 +1,55 @@
+Machine Learning 1 - Lab 1 answers
+==================================
+
+1) Hoeffding equation
+---------------------
+Given:
+  N = 43
+  E_in = 0.1
+  tolerated production error = 0.2
+
+We want to bound:
+  P(E_out > 0.2)
+
+Since E_out > 0.2 and E_in = 0.1, this implies:
+  E_out - E_in > 0.1
+
+Let eps = 0.1. By one-sided Hoeffding:
+  P(E_out - E_in >= eps) <= exp(-2 * N * eps^2)
+
+Therefore:
+  P(E_out > 0.2) <= exp(-2 * 43 * 0.1^2)
+                  = exp(-0.86)
+                  ~= 0.4232
+
+So yes, we can bound the probability:
+  P(E_out > 0.2) <= 0.4232
+
+(Using the two-sided form gives
+  P(|E_out - E_in| >= 0.1) <= 2 * exp(-0.86) ~= 0.8463.)
+
+
+2) Perceptron Learning Algorithm
+--------------------------------
+Implemented in skeleton.py:
+  - plain PLA
+  - visualization in each iteration (saved as GIF animations)
+  - small modification for pocket.npz:
+      random misclassified-point update + pocket (keep best-so-far weights)
+
+Observed results from running:
+  python3 skeleton.py
+
+  [pla/plain_pla]     iterations=4   train_acc=1.000   test_acc=1.000
+  [pocket/plain_pla]  iterations=37  train_acc=1.000   test_acc=0.960
+  [pocket/pocket_mod] iterations=43  train_acc=1.000   test_acc=0.970
+
+Generated animations:
+  figures/pla_plain_pla.gif
+  figures/pocket_plain_pla.gif
+  figures/pocket_pocket_mod.gif
+
+Answer to 2c:
+  On pocket.npz, plain PLA reached perfect training separation but lower test
+  performance (96%). A small modification (randomized update choice + pocket
+  best-weight tracking) improved test accuracy to 97% on this run.
